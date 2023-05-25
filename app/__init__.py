@@ -48,6 +48,22 @@ def calcular():
          
     return jsonify({'result':'deu certo'})
 
+## rota para cadastrar a nota da equipe
+@app.route("/cadastrarNotaSprint", methods = ["POST"])
+def cadastrarNotaSprintEquipe():
+    session = Session()
+
+    data = request.get_json()
+    notaSprintEquipe = EquipeSprint(
+    IdEquipe = data['idEquipe'],
+    IdSprint = data['idSprint'],
+    PontosPacer = data['nota']
+    )
+    session.add(notaSprintEquipe)
+    session.commit()
+
+    return jsonify({'result': 'deu certo :)'})
+
 @app.route("/obterSprintSemestreAno",methods = ['GET'])
 def obterSprintSemestreAno():
     
