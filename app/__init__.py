@@ -64,6 +64,29 @@ def cadastrarNotaSprintEquipe():
 
     return jsonify({'result': 'deu certo :)'})
 
+
+
+## rota para alterar senha
+@app.route("/alterarSenha", methods = ["PUT"])
+def alterarSenha():
+    session = Session()
+
+    data = request.get_json()
+    novaSenha = data["novaSenha"]
+    novaSenhaConf = data["novaSenhaConf"]
+    ## busca o usuario no banco e verifica se as senhas conferem
+    usuarioAlterar = session.query(Usuario).filter(Usuario.IdUsuario == data['idUsuario']).first()
+    if usuarioAlterar is None:
+        return jsonify({"error": "Usuario não encontrado"}), 401
+    else :
+        if novaSenha != novaSenhaConf:
+            return jsonify({"error": "As senhas devem ser iguais"}), 401
+        else:
+            usuarioAlterar.Senha = novaSenha
+            session.commit()
+            return jsonify({"id": usuarioAlterar.IdUsuario, "nome": usuarioAlterar.Nome})
+        
+
 @app.route("/obterSprintSemestreAno",methods = ['GET'])
 def obterSprintSemestreAno():
     
