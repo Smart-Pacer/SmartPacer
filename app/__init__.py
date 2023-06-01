@@ -67,7 +67,7 @@ def cadastrarNotaSprintEquipe():
 
 
 ## rota para alterar senha
-@app.route("/alterarSenha", methods = ["PUT"])
+@app.route("/alterarSenha", methods = ["POST"])
 def alterarSenha():
     session = Session()
 
